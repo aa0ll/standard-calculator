@@ -4,6 +4,11 @@
 
 无依赖、无需构建，双击 `index.html` 即可运行。
 
+## 在线地址
+
+- 站点：<https://aa0ll.github.io/standard-calculator/>
+- 仓库：<https://github.com/aa0ll/standard-calculator>
+
 ## 预览
 
 | 输入中：算式在上，实时结果在下 | 按下等号：结果平滑移到上方 |
@@ -81,7 +86,7 @@ python -m http.server 4173
 
 ## 部署
 
-当前是纯静态站点，可直接托管到任意静态服务器，或把整个 `calc/` 目录作为子目录上传到 GitHub Pages 仓库（HTML 内全部使用相对路径）。
+已发布到 GitHub Pages：仓库 `aa0ll/standard-calculator` 的 `main` 分支根目录，站点为 <https://aa0ll.github.io/standard-calculator/>。全部资源使用相对路径，也可以直接放到任意静态服务器或子目录。
 
 ## 浏览器支持
 
