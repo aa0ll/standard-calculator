@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    标准计算器 — 现代桌面计算器
    ========================================================================== */
 
@@ -1012,6 +1012,7 @@ body::after {
 
 /* ==========================================================================
    响应式
+   ========================================================================== */
 
 @media (max-width: 380px) {
   :root {
@@ -1046,11 +1047,11 @@ body::after {
     padding: 16px 12px;
   }
   .screen {
-    min-height: 132px;
+    min-height: 136px;
     padding: 10px 14px;
   }
   .display {
-    min-height: 76px;
+    min-height: 84px;
   }
   .pad {
     gap: 7px;
@@ -1089,14 +1090,14 @@ body::after {
     display: none;
   }
   .screen {
-    min-height: 106px;
-    margin-top: 10px;
-    padding: 9px 12px;
+    min-height: 112px;
+    margin-top: 8px;
+    padding: 8px 12px;
     border-radius: 17px;
   }
   .display {
-    min-height: 58px;
-    margin-top: 5px;
+    min-height: 74px;
+    margin-top: 4px;
   }
   .result-line {
     font-size: 32px;
@@ -1133,6 +1134,60 @@ body::after {
   .shortcut {
     margin-top: 8px;
     font-size: 9px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   大屏手机（约 414–430px 宽、浏览器工具栏占位后 700–800px 高）：
+   按键保持 50px，收紧内外边距与屏幕留白，避免底部被裁切
+   -------------------------------------------------------------------------- */
+@media (max-width: 520px) and (min-height: 701px) and (max-height: 800px) {
+  body {
+    padding: 10px 10px;
+  }
+  .calculator {
+    width: min(376px, calc(100vw - 20px));
+    padding: 14px 15px 14px;
+    border-radius: 32px;
+  }
+  .screen {
+    min-height: 138px;
+    margin-top: 10px;
+    padding: 9px 13px;
+    border-radius: 18px;
+  }
+  .display {
+    min-height: 90px;
+    margin-top: 5px;
+  }
+  .result-line {
+    font-size: 40px;
+  }
+  .result-line.len-m {
+    font-size: 34px;
+  }
+  .result-line.len-s {
+    font-size: 28px;
+  }
+  .result-line.len-xs {
+    font-size: 23px;
+  }
+  .display[data-state="editing"] .expr-line {
+    font-size: 21px;
+  }
+  .display[data-state="editing"] .expr-line.expr-len-m {
+    font-size: 19px;
+  }
+  .display[data-state="editing"] .expr-line.expr-len-s {
+    font-size: 17px;
+  }
+  .pad {
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .shortcut {
+    margin-top: 8px;
+    font-size: 9.5px;
   }
 }
 
