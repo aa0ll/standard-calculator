@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f3f5f8" />
+  <meta name="description" content="标准计算器：支持四则运算、三角与常数、矩阵运算的现代桌面计算器。" />
+  <title>标准计算器</title>
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f14'/%3E%3Crect x='16' y='24' width='32' height='5' rx='2.5' fill='%237ef0b0'/%3E%3Crect x='16' y='35' width='32' height='5' rx='2.5' fill='%237ef0b0'/%3E%3C/svg%3E"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="stage">
+    <main class="calculator" id="calculator" data-mode="basic">
+      <div class="topbar">
+        <div class="brand">
+          <span class="led" aria-hidden="true"></span>
+          <span class="brand-name">标准计算器</span>
+          <span class="brand-sub">STANDARD · 01</span>
+        </div>
+
+        <div class="switcher" role="tablist" aria-label="计算模式">
+          <span class="switch-thumb" id="switchThumb" aria-hidden="true"></span>
+          <button class="switch-btn is-on" type="button" role="tab" aria-selected="true" data-mode="basic">标准</button>
+          <button class="switch-btn" type="button" role="tab" aria-selected="false" data-mode="matrix">矩阵</button>
+        </div>
+      </div>
+
+      <section class="screen" id="screen" tabindex="0" title="点击后可按 Ctrl+V 粘贴算式" aria-label="显示屏，可粘贴算式" aria-live="polite">
+        <div class="screen-top">
+          <button class="chip" id="angleChip" type="button" data-angle="DEG" title="切换角度制（DEG / RAD）">DEG</button>
+          <span class="screen-tag" id="screenTag">标准运算</span>
+          <span class="screen-dot" aria-hidden="true"></span>
+        </div>
+
+        <div class="display" id="display" data-state="editing">
+          <div class="line result-line" id="resultLine">0</div>
+          <div class="line expr-line" id="exprLine">&nbsp;</div>
+        </div>
+        <div class="matrix-result" id="matrixResult" hidden></div>
+      </section>
+
+      <section class="pad" id="basicPad" aria-label="计算器键盘">
+        <button class="key key-fn key-trig" type="button" data-action="fn" data-value="sin" aria-label="正弦">sin</button>
+        <button class="key key-fn key-trig" type="button" data-action="fn" data-value="cos" aria-label="余弦">cos</button>
+        <button class="key key-fn key-trig" type="button" data-action="fn" data-value="tan" aria-label="正切">tan</button>
+        <button class="key key-fn key-util" type="button" data-action="back" aria-label="退格">⌫</button>
+
+        <button class="key key-fn key-const" type="button" data-action="const" data-value="pi" aria-label="圆周率 π">π</button>
+        <button class="key key-fn key-const" type="button" data-action="const" data-value="e" aria-label="自然常数 e">e</button>
+        <button class="key key-fn" type="button" data-action="paren" data-value="(" aria-label="左括号">(</button>
+        <button class="key key-fn" type="button" data-action="paren" data-value=")" aria-label="右括号">)</button>
+
+        <button class="key key-num" type="button" data-action="digit" data-value="7">7</button>
+        <button class="key key-num" type="button" data-action="digit" data-value="8">8</button>
+        <button class="key key-num" type="button" data-action="digit" data-value="9">9</button>
+        <button class="key key-op" type="button" data-action="op" data-value="/" aria-label="除">÷</button>
+
+        <button class="key key-num" type="button" data-action="digit" data-value="4">4</button>
+        <button class="key key-num" type="button" data-action="digit" data-value="5">5</button>
+        <button class="key key-num" type="button" data-action="digit" data-value="6">6</button>
+        <button class="key key-op" type="button" data-action="op" data-value="*" aria-label="乘">×</button>
+
+        <button class="key key-num" type="button" data-action="digit" data-value="1">1</button>
+        <button class="key key-num" type="button" data-action="digit" data-value="2">2</button>
+        <button class="key key-num" type="button" data-action="digit" data-value="3">3</button>
+        <button class="key key-op" type="button" data-action="op" data-value="-" aria-label="减">−</button>
+
+        <button class="key key-num key-zero" type="button" data-action="digit" data-value="0">0</button>
+        <button class="key key-num" type="button" data-action="dot" aria-label="小数点">.</button>
+        <button class="key key-op" type="button" data-action="op" data-value="+" aria-label="加">+</button>
+
+        <button class="key key-fn key-clear" type="button" data-action="clear" aria-label="全部清除">AC</button>
+        <button class="key key-eq key-eq-wide" type="button" data-action="equals" aria-label="等于">=</button>
+      </section>
+
+      <section class="matrix-panel" id="matrixPanel" aria-label="矩阵运算" hidden>
+        <div class="matrix-row">
+          <div class="matrix-card">
+            <div class="matrix-card-head">
+              <span class="matrix-name">矩阵 A</span>
+              <select class="size-select" id="sizeA" aria-label="矩阵 A 的尺寸">
+                <option value="2">2 × 2</option>
+                <option value="3">3 × 3</option>
+              </select>
+            </div>
+            <div class="matrix-grid" id="gridA"></div>
+          </div>
+
+          <div class="matrix-card">
+            <div class="matrix-card-head">
+              <span class="matrix-name">矩阵 B</span>
+              <select class="size-select" id="sizeB" aria-label="矩阵 B 的尺寸">
+                <option value="2">2 × 2</option>
+                <option value="3">3 × 3</option>
+              </select>
+            </div>
+            <div class="matrix-grid" id="gridB"></div>
+          </div>
+        </div>
+
+        <div class="matrix-ops" role="group" aria-label="矩阵运算">
+          <button class="mop" type="button" data-mop="add">A + B</button>
+          <button class="mop" type="button" data-mop="sub">A − B</button>
+          <button class="mop" type="button" data-mop="mul">A × B</button>
+          <button class="mop" type="button" data-mop="det">det A</button>
+          <button class="mop" type="button" data-mop="transpose">Aᵀ</button>
+          <button class="mop" type="button" data-mop="inverse">A⁻¹</button>
+          <button class="mop mop-wide" type="button" data-mop="clear">清空矩阵</button>
+        </div>
+      </section>
+
+      <p class="shortcut">Enter 计算 · Esc 清空</p>
+    </main>
+  </div>
+
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
