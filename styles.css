@@ -785,6 +785,21 @@ body::after {
   margin-top: 9px;
 }
 
+.matrix-grid.is-swapped {
+  animation: matrix-swap 0.32s ease;
+}
+
+@keyframes matrix-swap {
+  from {
+    opacity: 0.2;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .matrix-grid input {
   width: 100%;
   min-width: 0;
@@ -863,9 +878,9 @@ body::after {
   outline-offset: 2px;
 }
 
-.mop-wide {
-  grid-column: span 2;
-  color: #ffb199;
+.mop-swap {
+  color: #8df5bd;
+  letter-spacing: 0.02em;
 }
 
 /* 矩阵模式：机身与矩阵控件整体放大，视觉重量与标准键盘一致 */
