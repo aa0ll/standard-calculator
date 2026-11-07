@@ -1147,6 +1147,33 @@
     showMatrixIdle();
   }
 
+  function swapMatrices() {
+    const a = matrixState.A;
+    const b = matrixState.B;
+    const aData = cloneMatrix(a.data);
+    const bData = cloneMatrix(b.data);
+    const aSize = a.size;
+
+    a.size = b.size;
+    a.data = bData;
+    b.size = aSize;
+    b.data = aData;
+
+    sizeA.value = String(a.size);
+    sizeB.value = String(b.size);
+    buildMatrixGrid('A');
+    buildMatrixGrid('B');
+    clearMatrixMarks();
+    matrixLast = null;
+    showMatrixIdle();
+
+    [gridA, gridB].forEach((grid) => {
+      grid.classList.remove('is-swapped');
+      void grid.offsetWidth;
+      grid.classList.add('is-swapped');
+    });
+  }
+
   function clearMatrixMarks() {
     gridA.querySelectorAll('input.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
     gridB.querySelectorAll('input.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
@@ -1194,6 +1221,11 @@
 
     if (op === 'clear') {
       clearMatrices();
+      return;
+    }
+
+    if (op === 'swap') {
+      swapMatrices();
       return;
     }
 
